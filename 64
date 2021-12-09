@@ -12,9 +12,7 @@ class Solution {
             }
         }
         
-        //for(int i = 0; i < grid.length; i++)
-            //System.out.println(Arrays.toString(grid[i]));
-        
+ 
         return grid[grid.length - 1][grid[0].length - 1];
     }    
     }
