@@ -1,0 +1,30 @@
+class Solution {
+    public int[][] memo;
+    public int[] prices;
+    public int n;
+    
+    public int maxProfit(int[] prices) {
+        this.n = prices.length;
+        this.prices = prices;
+        this.memo = new int[n+1][3];
+        return topdownDP(0, 0);
+    }
+    
+    public int topdownDP(int d, int hold){
+        if(d == n){
+            return 0;
+        }else{
+            if(memo[d][hold]!=0){
+                return memo[d][hold];
+            }
+            if(hold == 0){
+                memo[d][hold] = Math.max(topdownDP(d+1, 2)-prices[d],topdownDP(d+1, 0));
+            }else if(hold == 1){
+                memo[d][hold] = topdownDP(d+1, 0);
+            }else{
+                memo[d][hold] = Math.max(topdownDP(d+1, 1)+prices[d],topdownDP(d+1, 2));
+            }
+            return memo[d][hold];
+        }
+    }
+}
