@@ -1,0 +1,32 @@
+class Solution {
+    public int minSwap(int[] A, int[] B) {
+        int numOfSwaps = 0;
+
+        for (int i = 1; i < A.length; i++)
+        {
+            if (A[i] <= A[i - 1])
+            {
+                swap(A, B, i);
+                numOfSwaps++;
+            }
+        }
+
+        for (int i = 1; i < B.length; i++)
+        {
+            if (B[i] <= B[i - 1])
+            {
+                swap(A, B, i);
+                numOfSwaps++;
+            }
+        }
+         
+        return numOfSwaps;
+    }
+     
+    private void swap(int[] A, int[] B, int index)
+    {
+        int temp = A[index];
+        A[index] = B[index];
+        B[index] = temp;
+    }
+}
