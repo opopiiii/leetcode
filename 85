@@ -1,0 +1,46 @@
+class Solution {
+    public int maximalRectangle(char[][] arr) {
+        int n=arr.length;
+        if(n==0)return 0;
+        int m=arr[0].length;
+        
+        int [][]mat=new int[n][m];
+        
+        for(int i=0;i<m;i++){
+            if(arr[0][i]=='1')mat[0][i]=1;
+        }
+        
+        for(int i=1;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(arr[i][j]=='1')mat[i][j]=mat[i-1][j]+1;
+            }
+        }
+        
+        int max=0;
+        for(int i=0;i<arr.length;i++){
+            max=Math.max(largestRectangleArea(mat[i]),max);
+        }
+        return max;
+    }
+    public int largestRectangleArea(int[] arr) {
+        int n=arr.length;
+        int[]left=new int[n];
+        int[]right=new int[n];
+        
+        for(int i=0;i<n;i++){
+            int p=i-1;
+            while(p>=0&&arr[p]>=arr[i])p=left[p];
+            left[i]=p;
+        }
+        for(int i=n-1;i>=0;i--){
+            int p=i+1;
+            while(p<n&&arr[p]>=arr[i])p=right[p];
+            right[i]=p;
+        }
+        int ans=0;
+        for(int i=0;i<n;i++){
+            ans=Math.max(ans,(right[i]-left[i]-1)*arr[i]);
+        }
+        return ans;
+    }
+}
