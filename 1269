@@ -1,16 +1,29 @@
 class Solution {
-    public int numWays(int steps, int arrLen) {
-        int maxPos = Math.min(steps,arrLen);
-        long[][] dp = new long[steps+1][maxPos+1];
+    
+    static int mod = (int)Math.pow(10, 9) + 7;
+    
+    public int numWays(int steps, int n) {
         
-        dp[1][0]=1;
-        dp[1][1]=1;
-        for(int i = 2; i <= steps; i++) {
-            for(int j = 0; j < maxPos; j++) {
-                dp[i][j] = (dp[i-1][j] + dp[i-1][j+1] + (j>0?dp[i-1][j-1]:0))%1000000007;
+        int[] arr = new int[n];
+        if(n <= 1) return n;
+        arr[0] = 1;
+        arr[1] = 1;
+        
+        for(int j = 1; j < steps; j++){
+            
+            int[] temp = new int[n]; 
+            
+            for(int i = 0; i <= Math.min(n - 1, steps - j); i++){
+                long ans = arr[i];
+                if(i > 0) ans = (ans + arr[i - 1]) % mod;
+                if(i < n - 1) ans = (ans + arr[i + 1]) % mod;
+                temp[i] = (int)ans;
             }
+            
+            arr = temp;
         }
         
-        return (int)dp[steps][0];
+        return arr[0];
+        
     }
 }
