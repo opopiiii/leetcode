@@ -1,0 +1,29 @@
+class Solution {
+    public int palindromePartition(String s, int k) {
+        if(s.length() == k) {
+            return 0;
+        }
+        int n = s.length();
+        int[][] pal = new int[n][n];
+        int[][] dp = new int[k][n];
+        for(int[] d: dp) {
+            Arrays.fill(d, n);
+        }
+        for(int r = 0; r < n; r++) {
+            for(int l = r; l >= 0; l--) {
+                if(l == r || (l + 1 == r && s.charAt(l) == s.charAt(r))) {
+                    
+                } else {
+                    pal[l][r] = (s.charAt(l) == s.charAt(r) ? 0 : 1) + pal[l + 1][r - 1];
+                }
+                for(int m = 1; m < k; m++) {
+                    if(l >= m) {
+                        dp[m][r] = Math.min(dp[m][r], dp[m - 1][l - 1] + pal[l][r]);
+                    }
+                }
+            }
+            dp[0][r] = pal[0][r];
+        }
+        return dp[k - 1][n - 1];
+    }
+}
