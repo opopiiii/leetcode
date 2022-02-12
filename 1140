@@ -1,0 +1,27 @@
+class Solution {
+    int[][] dp = new int[204][204];
+    public int stoneGameII(int[] piles) {
+        int sum= 0;
+        for(int i = 0; i < 201; i++)
+            Arrays.fill(dp[i],-1);
+        
+        for(var el: piles)  sum += el;
+        int diff = help(0, 1, piles);
+        return (sum + diff)/2;
+    }
+    
+    int help(int i, int M, int[] p){
+        if(i >= p.length)   return 0;
+        
+        if(dp[i][M] != -1)  return dp[i][M];
+        
+        int tot = 0;
+        int ans = Integer.MIN_VALUE;
+        for(int j = 0; j < 2 * M; j++){
+            if(i + j < p.length) tot += p[i+j];
+            ans = Math.max(ans, tot - help(i+j+1, Math.max(M, j+1), p));
+        }
+        return dp[i][M] = ans;
+    }
+    
+}
